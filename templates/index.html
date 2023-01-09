@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <title>Hello!</title>
+</head>
+
+<body>
+    <div class="hello_msg">
+        <h1>Hi! Learning Jinja2 for FastAPI</h1>
+    </div>
+    <div class="cmd_one">
+        <h3>Send Message</h3>
+        <form name='send_msg'>
+            <input id='msg' type="text" value="Лол чел ты кринж">
+            <input id='send' type="button" value='Послать'>
+        </form>
+        <div id="hui"></div>
+    </div>
+    <script>
+        document.getElementById('send').onclick = () => {
+            console.log(document.getElementById('msg').value)
+            fetch('/api/sendmsg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    'text': document.getElementById('msg').value
+                })
+            }).then((resp) => {
+                if (resp.status == 200) {
+                    document.getElementById('hui').innerHTML = 'ОТПРАВЛЕНО!'
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
